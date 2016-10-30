@@ -4,9 +4,14 @@ var app = express();
 var port = process.env.PORT || 5000;
 
 app.use(express.static('public'));
-app.use(express.static('src/views'));
+app.set('views','./src/views');
+
+var handlebars = require('express-handlebars');
+app.engine('.hbs', handlebars({extname: '.hbs'}));
+app.set('view engine', '.hbs');
+
 app.get('/', function (req, res) {
-    res.send('foo foo foo foo foobar');
+    res.render('index', {title:'hello from hbs', list:['a', 'b']});
 });
 app.listen(port, function (err) {
     console.log('listening on port:' + port);
