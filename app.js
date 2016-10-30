@@ -8,7 +8,7 @@ app.set('views','./src/views');
 app.set('view engine', 'ejs');
 
 app.get('/', function (req, res) {
-    res.render('index', {title:'hello from ejs', list:['a', 'b']});
+    res.render('index', {title:'hello from ejs', nav:[{text:'Books', link:'/book'}, {text:'Authors', link:'/author'}]});
 });
 app.listen(port, function (err) {
     console.log('listening on port:' + port);
