@@ -9,9 +9,29 @@ app.use(express.static('public'));
 app.set('views','./src/views');
 app.set('view engine', 'ejs');
 
+var books = [
+    {
+        title: 'war and peace',
+        genre: 'fiction',
+        author: 'Tolstoy',
+        read: false
+    },
+    {
+        title: 'Javascrip the good parts',
+        genre: 'computing',
+        author: 'Crockford',
+        read: true
+    },
+    {
+        title: 'Pragmatic programmer',
+        genre: 'computing',
+        author: 'Hunt',
+        read: true
+    }
+];
 bookRouter.route('/')
     .get(function(req, res) {
-        res.send('Hello Books');
+        res.render('books',{title:'hello from ejs',nav:[{text:'Books', link:'/books'}, {text:'Authors', link:'/authors'}],books:books});
     });
 app.use('/books', bookRouter);
 
