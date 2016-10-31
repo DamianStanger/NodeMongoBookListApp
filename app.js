@@ -3,12 +3,20 @@ var app = express();
 
 var port = process.env.PORT || 5000;
 
+var bookRouter = express.Router();
+
 app.use(express.static('public'));
 app.set('views','./src/views');
 app.set('view engine', 'ejs');
 
+bookRouter.route('/')
+    .get(function(req, res) {
+        res.send('Hello Books');
+    });
+app.use('/books', bookRouter);
+
 app.get('/', function (req, res) {
-    res.render('index', {title:'hello from ejs', nav:[{text:'Books', link:'/book'}, {text:'Authors', link:'/author'}]});
+    res.render('index', {title:'hello from ejs', nav:[{text:'Books', link:'/books'}, {text:'Authors', link:'/authors'}]});
 });
 app.listen(port, function (err) {
     console.log('listening on port:' + port);
