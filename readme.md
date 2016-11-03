@@ -17,4 +17,5 @@ Interactive mongo shell
 * use myNewDatabase
 * db.myCollection.insert( { x: 1 } );
 * db.myCollection.find()
+* db.myCollection.remove({})
 * https://docs.mongodb.com/manual/crud/
