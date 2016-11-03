@@ -1,42 +1,35 @@
 var express = require('express');
 var bookRouter = express.Router();
+var mongodb = require('mongodb').MongoClient;
+var ObjectId = require('mongodb').ObjectID;
 
 var router = function(nav) {
-    var books = [
-        {
-            title: 'war and peace',
-            genre: 'fiction',
-            author: 'Tolstoy',
-            read: false
-        },
-        {
-            title: 'Javascrip the good parts',
-            genre: 'computing',
-            author: 'Crockford',
-            read: true
-        },
-        {
-            title: 'Pragmatic programmer',
-            genre: 'computing',
-            author: 'Hunt',
-            read: true
-        }
-    ];
     bookRouter.route('/')
         .get(function (req, res) {
-            res.render('books', {
-                title: 'hello from ejs',
-                nav: nav,
-                books: books
+            var url = 'mongodb://localhost:27017/libraryApp';
+            mongodb.connect(url, function(err, db) {
+                var collection = db.collection('books');
+                collection.find({}).toArray(function(err, results) {
+                    res.render('books', {
+                        title: 'hello from ejs',
+                        nav: nav,
+                        books: results});
+                });
             });
         });
     bookRouter.route('/:id')
         .get(function (req, res) {
-            var id = req.params.id;
-            res.render('book', {
-                title: 'book',
-                nav: nav,
-                book: books[id]
+            var id = new ObjectId(req.params.id);
+            var url = 'mongodb://localhost:27017/libraryApp';
+            mongodb.connect(url, function (err, db) {
+                var collection = db.collection('books');
+                collection.findOne(({_id: id}), function (err, result) {
+                    res.render('book', {
+                        title: 'hello from ejs',
+                        nav: nav,
+                        book: result
+                    });
+                });
             });
         });
 
