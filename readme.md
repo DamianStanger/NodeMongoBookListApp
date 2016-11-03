@@ -12,4 +12,9 @@ Interactive mongo shell
 /bin/mongo
 
 * show dbs
-* 
+* db
+* show collections
+* use myNewDatabase
+* db.myCollection.insert( { x: 1 } );
+* db.myCollection.find()
+* https://docs.mongodb.com/manual/crud/
